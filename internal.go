@@ -71,11 +71,6 @@ func (a *API) VerifyTLS(set bool) {
 // DebugFlag is the global debugging variable
 var DebugFlag = false
 
-// SetDebug enables debug output
-func SetDebug(state bool) {
-	DebugFlag = state
-}
-
 // Debug outputs debug messages
 func Debug(msg interface{}) {
 	if DebugFlag {

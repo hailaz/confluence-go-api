@@ -41,21 +41,18 @@ func (a *API) Request(req *http.Request) ([]byte, error) {
 	}
 	Debug(fmt.Sprintf("====== Response Status Code: %d ======", resp.StatusCode))
 
-	res, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	err = resp.Body.Close()
-	if err != nil {
-		return nil, err
-	}
-
-	Debug("====== Response Body ======")
-	Debug(string(res))
-	Debug("====== /Response Body ======")
+	defer resp.Body.Close()
 
 	switch resp.StatusCode {
 	case http.StatusOK, http.StatusCreated, http.StatusPartialContent:
+		res, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+
+		Debug("====== Response Body ======")
+		Debug(string(res))
+		Debug("====== /Response Body ======")
 		return res, nil
 	case http.StatusNoContent, http.StatusResetContent:
 		return nil, nil

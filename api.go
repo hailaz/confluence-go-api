@@ -11,3 +11,8 @@ type API struct {
 	Client          *http.Client
 	username, token string
 }
+
+// SetDebug enables debug output
+func SetDebug(state bool) {
+	DebugFlag = state
+}
